@@ -20,24 +20,29 @@ public class Tipo {
 		this.nombre = nombre;
 	}
 	
-	public List<Item> getItem() {
+	public List<Item> getItems() {
 		return items;
 	}
-	public void setItem(List<Item> item) {
-		this.items = item;
+	public void setItems(List<Item> items) {
+		this.items = items;
 	}
 	
-	public void modificarTipo(String nombre, ArrayList<Item> item) {
-		this.nombre = nombre;
-		this.items = item;
+	public void modificarTipo(String nombre, ArrayList<Item> items) {
+		setNombre(nombre);
+		setItems(items);
 	}
+	
+	public void consultarTipo() {
+		System.out.println("Nombre de tipo: " + getNombre() + "\nÍtems de este tipo: " + getItems());
+	}
+	
 	public void addItem(Item item) {
-		this.items.add(item);
+		items.add(item);
 	}
 	public void borrarItem(Item item) throws Exception {
-		if (!this.items.contains(item)) {
+		if (!items.contains(item)) {
 			throw new Exception("Item doesn't exist.");
 		}
-		this.items.remove(item);
+		items.remove(item);
 	}
 }
