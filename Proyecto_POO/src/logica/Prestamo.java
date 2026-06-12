@@ -1,11 +1,12 @@
 package logica;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Prestamo {
+public class Prestamo implements Serializable {
 	private String nombre;
 	private int tipoDeAlerta;
 	private LocalDateTime alerta;
@@ -63,6 +64,17 @@ public class Prestamo {
 			throw new Exception("Item no existe.");
 		}
 		itemsPrestados.remove(item);
+	}
+	
+	public void retornarItem(Item item) throws Exception {
+		if (!itemsPrestados.contains(item)) {
+			throw new Exception("Item no existe.");
+		}
+		itemsPrestados.remove(item);
+	}
+	
+	public void alertaRecurrente() {
+		
 	}
 	
 	public void alertaUnica() {
