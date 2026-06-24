@@ -39,8 +39,18 @@ public class Controladora implements Serializable {
 		}
 		return instance;
 	}
-	
-	public void crearItem(String nombre, String descripcion, Tipo tipo) {
+	private boolean existeItem(String nombreItem) {
+		for (Item item : items) {
+			if (item.getNombre() == nombreItem) {
+				return true;
+			}
+		}
+		return false;
+	}
+	public void crearItem(String nombre, String descripcion, Tipo tipo) throws Exception {
+		if (existeItem(nombre)) {
+			throw new Exception("Ya existe un ítem con ese nombre.");
+		}
 		Item item = new Item(nombre, descripcion, codigoItem, tipo);
 		items.add(item);
 		codigoItem++;
@@ -135,11 +145,20 @@ public class Controladora implements Serializable {
 		}
 	}
 	
-	public void borrarItem(Item item) throws Exception {
-		if (!items.contains(item)) {
+	public void borrarItem(String nombreItem) throws Exception {
+		if (!existeItem(nombreItem)) {
 			throw new Exception("No existe ese item.");
 		}
-		items.remove(item);
+		int posItem = 0;
+		Item itemBorrar;
+		for (Item item : items) {
+			if (item.getNombre() == nombreItem) {
+				itemBorrar = items.get(posItem);
+				items.remove(itemBorrar);
+				break;
+			}
+			posItem++;
+		}
 	}
 	
 	public void crearPersona(String nombre, String telefono, String email) throws Exception {
