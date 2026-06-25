@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
@@ -125,6 +126,7 @@ public class CrearItem extends JDialog {
 		});
 		tablaTipos.getColumnModel().getColumn(0).setPreferredWidth(664);
 		scrollPane.setViewportView(tablaTipos);
+		tablaTipos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		JButton btnConfirmar = new JButton("Confirmar");
 		btnConfirmar.addActionListener(new ActionListener() {

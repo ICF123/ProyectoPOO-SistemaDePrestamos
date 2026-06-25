@@ -70,7 +70,10 @@ public class Item implements Serializable {
 				"\nTipo: " + tipo + "\nCategorías: " + categorias.toString());
 	}
 	
-	public void agregarCategoria(String categoria) {
+	public void agregarCategoria(String categoria) throws Exception {
+		if (categorias.contains(categoria)) {
+			throw new Exception("Ya existe esa categoría.");
+		}
 		categorias.add(categoria);
 	}
 	

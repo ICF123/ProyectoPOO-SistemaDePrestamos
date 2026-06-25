@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 import control.Controladora;
@@ -107,6 +108,7 @@ public class ModificarItem extends JDialog {
 		});
 		tablaTipos.getColumnModel().getColumn(0).setPreferredWidth(666);
 		scrollPane.setViewportView(tablaTipos);
+		tablaTipos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		JButton btnConfirmar = new JButton("Confirmar");
 		btnConfirmar.addActionListener(new ActionListener() {

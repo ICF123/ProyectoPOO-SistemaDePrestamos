@@ -13,6 +13,14 @@ public class Categoria implements Serializable {
 		items = new ArrayList<Item>();
 	}
 
+	private boolean existeItem(String nombreItem) {
+		for (Item item : items) {
+			if (item.getNombre() == nombreItem) {
+				return true;
+			}
+		}
+		return false;
+	}
 	public String getNombre() {
 		return nombre;
 	}
@@ -40,10 +48,15 @@ public class Categoria implements Serializable {
 		items.add(item);
 	}
 	
-	public void borrarItem(Item item) throws Exception {
-		if (!items.contains(item)) {
+	public void borrarItem(String item) throws Exception {
+		if (!existeItem(item)) {
 			throw new Exception("Item doesn't exist.");
 		}
-		items.remove(item);
+		for (int i = 0; i < items.size(); i++) {
+			if (items.get(i).getNombre() == item) {
+				items.remove(i);
+				break;
+			}
+		}
 	}
 }

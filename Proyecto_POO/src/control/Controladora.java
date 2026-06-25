@@ -90,13 +90,13 @@ public class Controladora implements Serializable {
 		}
 	}
 	
-	public void agregarCategoriaItem(String categoria, Item item) throws Exception {
-		if (!items.contains(item)) {
+	public void agregarCategoriaItem(String categoria, String item) throws Exception {
+		if (!existeItem(item)) {
 			throw new Exception("No existe ese item.");
 		}
 		Item itemTemporario = null;
 		for (int i = 0; i < items.size(); i++) {
-			if (items.get(i) == item) {
+			if (items.get(i).getNombre() == item) {
 				itemTemporario = items.get(i);
 				itemTemporario.agregarCategoria(categoria);
 				items.set(i, itemTemporario);
@@ -105,13 +105,13 @@ public class Controladora implements Serializable {
 		}
 	}
 	
-	public void borrarCategoriaItem(String categoria, Item item) throws Exception {
-		if (!items.contains(item)) {
+	public void borrarCategoriaItem(String categoria, String item) throws Exception {
+		if (!existeItem(item)) {
 			throw new Exception("No existe ese item.");
 		}
 		Item itemTemporario = null;
 		for (int i = 0; i < items.size(); i++) {
-			if (items.get(i) == item) {
+			if (items.get(i).getNombre() == item) {
 				itemTemporario = items.get(i);
 				itemTemporario.borrarCategoria(categoria);
 				items.set(i, itemTemporario);
@@ -238,6 +238,14 @@ public class Controladora implements Serializable {
 		personas.remove(persona);
 	}
 	
+	private boolean existeCategoria(String nombreCategoria) {
+		for (Categoria categoria : categorias) {
+			if (categoria.getNombre() == nombreCategoria) {
+				return true;
+			}
+		}
+		return false;
+	}
 	public void crearCategoría(String nombre) {
 		Categoria categoria = new Categoria(nombre);
 		categorias.add(categoria);
@@ -287,13 +295,13 @@ public class Controladora implements Serializable {
 		}
 	}
 	
-	public void borrarItemCategoria(Item item, Categoria categoria) throws Exception {
-		if (!categorias.contains(categoria)) {
+	public void borrarItemCategoria(String item, String categoria) throws Exception {
+		if (!existeCategoria(categoria)) {
 			throw new Exception("No existe esa categoría.");
 		}
 		Categoria categoriaTemporaria = null;
 		for (int i = 0; i < categorias.size(); i++) {
-			if (categorias.get(i) == categoria) {
+			if (categorias.get(i).getNombre() == categoria) {
 				categoriaTemporaria = categorias.get(i);
 				categoriaTemporaria.borrarItem(item);
 				categorias.set(i, categoriaTemporaria);
@@ -358,13 +366,13 @@ public class Controladora implements Serializable {
 		}
 	}
 	
-	public void borrarItemTipo(Item item, Tipo tipo) throws Exception {
+	public void borrarItemTipo(String item, String tipo) throws Exception {
 		if (!tipos.contains(tipo)) {
 			throw new Exception("No existe ese tipo.");
 		}
 		Tipo tipoTemporario = null;
 		for (int i = 0; i < tipos.size(); i++) {
-			if (tipos.get(i) == tipo) {
+			if (tipos.get(i).getNombre() == tipo) {
 				tipoTemporario = tipos.get(i);
 				tipoTemporario.borrarItem(item);
 				tipos.set(i, tipoTemporario);
@@ -477,7 +485,7 @@ public class Controladora implements Serializable {
 		}
 	}
 	
-	public void guardarDatos() throws IOException {
+	public static void guardarDatos() throws IOException {
 		FileOutputStream file = new FileOutputStream("DatosPrestamos.bin");
 		ObjectOutputStream stream = new ObjectOutputStream(file);
 		stream.writeObject(instance);
@@ -485,7 +493,7 @@ public class Controladora implements Serializable {
 		file.close();
 	}
 	
-	public void cargarDatos() throws IOException, ClassNotFoundException {
+	public static void cargarDatos() throws IOException, ClassNotFoundException {
 		FileInputStream file = new FileInputStream("DatosPrestamos.bin");
 		ObjectInputStream stream = new ObjectInputStream(file);
 		instance = (Controladora) stream.readObject();
