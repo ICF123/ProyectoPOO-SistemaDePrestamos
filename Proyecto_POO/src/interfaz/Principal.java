@@ -55,7 +55,7 @@ public class Principal {
 			else {
 				nombrePrestamo = item.getPrestamo().getNombre();
 			}
-			Object[] fila = new Object[] {item.getNombre(), item.getTipo().getNombre(), nombrePrestamo};
+			Object[] fila = new Object[] {item.getNombre(), item.getTipo(), nombrePrestamo};
 			model.addRow(fila);
 		}
 	}
@@ -85,6 +85,34 @@ public class Principal {
 					}
 				}
 			}
+		}
+	}
+	private void crearItem() {
+		CrearItem ventanaCrearItem = new CrearItem();
+		ventanaCrearItem.setVisible(true);
+		cargarItems();
+	}
+	private void modificarItem() {
+		int numeroFila = tablaItems.getSelectedRow();
+		DefaultTableModel model = (DefaultTableModel) tablaItems.getModel();
+		if (numeroFila == -1) {
+			JOptionPane.showMessageDialog(frame, "Debe seleccionar un ítem.", "Error", JOptionPane.ERROR_MESSAGE);
+		}
+		else {
+			ModificarItem ventanaModificarItem = new ModificarItem(model.getValueAt(numeroFila, 0).toString());
+			ventanaModificarItem.setVisible(true);
+			cargarItems();
+		}
+	}
+	private void consultarItem() {
+		int numeroFila = tablaItems.getSelectedRow();
+		if (numeroFila == -1) {
+			JOptionPane.showMessageDialog(frame, "Debe seleccionar un ítem.", "Error", JOptionPane.ERROR_MESSAGE);
+		}
+		else {
+			ConsultarItem ventanaConsultarItem = new ConsultarItem();
+			ventanaConsultarItem.setVisible(true);
+			cargarItems();
 		}
 	}
 	/**
@@ -126,21 +154,49 @@ public class Principal {
 			new Object[][] {
 			},
 			new String[] {
-				"Nombre", "Tipo", "Pr\u00E9stamo"
+				"Nombre", "C\u00F3digo", "Tipo", "Pr\u00E9stamo"
 			}
 		) {
 			Class[] columnTypes = new Class[] {
-				String.class, String.class, Object.class
+				String.class, Integer.class, String.class, Object.class
 			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
 		});
+		tablaItems.getColumnModel().getColumn(0).setPreferredWidth(176);
+		tablaItems.getColumnModel().getColumn(1).setPreferredWidth(116);
+		tablaItems.getColumnModel().getColumn(2).setPreferredWidth(163);
+		tablaItems.getColumnModel().getColumn(3).setPreferredWidth(250);
 		tablaItems.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tablaItems.getColumnModel().getColumn(0).setPreferredWidth(217);
-		tablaItems.getColumnModel().getColumn(1).setPreferredWidth(199);
-		tablaItems.getColumnModel().getColumn(2).setPreferredWidth(250);
 		scrollPane.setViewportView(tablaItems);
+		
+		JButton botonCrearItem = new JButton("Crear");
+		botonCrearItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				crearItem();
+			}
+		});
+		botonCrearItem.setBounds(509, 14, 90, 22);
+		PanelItems.add(botonCrearItem);
+		
+		JButton btnModificarItem = new JButton("Modificar");
+		btnModificarItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				modificarItem();
+			}
+		});
+		btnModificarItem.setBounds(509, 48, 90, 22);
+		PanelItems.add(btnModificarItem);
+		
+		JButton btnConsultar = new JButton("Consultar");
+		btnConsultar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				consultarItem();
+			}
+		});
+		btnConsultar.setBounds(510, 81, 90, 22);
+		PanelItems.add(btnConsultar);
 		
 		JButton botonBorrarItem = new JButton("Borrar");
 		botonBorrarItem.addActionListener(new ActionListener() {
@@ -150,10 +206,6 @@ public class Principal {
 		});
 		botonBorrarItem.setBounds(509, 114, 90, 22);
 		PanelItems.add(botonBorrarItem);
-		
-		JButton botonCrearItem = new JButton("Crear");
-		botonCrearItem.setBounds(509, 14, 90, 22);
-		PanelItems.add(botonCrearItem);
 		
 		JPanel PanelPersonas = new JPanel();
 		tabbedPane.addTab("Personas", null, PanelPersonas, null);

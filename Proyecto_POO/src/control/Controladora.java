@@ -31,6 +31,12 @@ public class Controladora implements Serializable {
 		items = new ArrayList<Item>();
 		prestamos = new ArrayList<Prestamo>();
 		personas = new ArrayList<Persona>();
+		try {
+			this.crearItem("Bola", "Rebota", "Juguete");
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+		}
 	}
 	
 	public static Controladora getInstance() {
@@ -47,7 +53,7 @@ public class Controladora implements Serializable {
 		}
 		return false;
 	}
-	public void crearItem(String nombre, String descripcion, Tipo tipo) throws Exception {
+	public void crearItem(String nombre, String descripcion, String tipo) throws Exception {
 		if (existeItem(nombre)) {
 			throw new Exception("Ya existe un ítem con ese nombre.");
 		}
@@ -56,16 +62,15 @@ public class Controladora implements Serializable {
 		codigoItem++;
 	}
 	
-	public void modificarItem(String nombre, String descripcion, List<Categoria> categorias,
-			Tipo tipo, Item item) throws Exception {
-		if (!items.contains(item)) {
+	public void modificarItem(String nombre, String descripcion, String tipo, String nombreItemCambiar) throws Exception {
+		if (!existeItem(nombreItemCambiar)) {
 			throw new Exception("No existe ese item.");
 		}
 		Item itemTemporario = null;
 		for (int i = 0; i < items.size(); i++) {
-			if (items.get(i) == item) {
+			if (items.get(i).getNombre() == nombreItemCambiar) {
 				itemTemporario = items.get(i);
-				itemTemporario.modificarItem(nombre, descripcion, categorias, tipo);
+				itemTemporario.modificarItem(nombre, descripcion, tipo);
 				items.set(i, itemTemporario);
 				break;
 			}
@@ -85,7 +90,7 @@ public class Controladora implements Serializable {
 		}
 	}
 	
-	public void agregarCategoriaItem(Categoria categoria, Item item) throws Exception {
+	public void agregarCategoriaItem(String categoria, Item item) throws Exception {
 		if (!items.contains(item)) {
 			throw new Exception("No existe ese item.");
 		}
@@ -100,7 +105,7 @@ public class Controladora implements Serializable {
 		}
 	}
 	
-	public void borrarCategoriaItem(Categoria categoria, Item item) throws Exception {
+	public void borrarCategoriaItem(String categoria, Item item) throws Exception {
 		if (!items.contains(item)) {
 			throw new Exception("No existe ese item.");
 		}

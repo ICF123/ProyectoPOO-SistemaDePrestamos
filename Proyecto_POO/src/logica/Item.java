@@ -9,15 +9,15 @@ public class Item implements Serializable {
 	private final int codigo;
 	private String descripcion;
 	private Prestamo prestamo = null;
-	private Tipo tipo;
-	private List<Categoria> categorias;
+	private String tipo;
+	private List<String> categorias;
 	
-	public Item(String nombre, String descripcion, int codigo, Tipo tipo) {
+	public Item(String nombre, String descripcion, int codigo, String tipo) {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.codigo = codigo;
 		this.tipo = tipo;
-		categorias = new ArrayList<Categoria>();
+		categorias = new ArrayList<String>();
 	}
 
 	public String getNombre() {
@@ -41,17 +41,17 @@ public class Item implements Serializable {
 		this.prestamo = prestamo;
 	}
 
-	public Tipo getTipo() {
+	public String getTipo() {
 		return tipo;
 	}
-	public void setTipo(Tipo tipo) {
+	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
 
-	public List<Categoria> getCategorias() {
+	public List<String> getCategorias() {
 		return categorias;
 	}
-	public void setCategorias(List<Categoria> categorias) {
+	public void setCategorias(List<String> categorias) {
 		this.categorias = categorias;
 	}
 
@@ -59,23 +59,22 @@ public class Item implements Serializable {
 		return codigo;
 	}
 	
-	public void modificarItem(String nombre, String descripcion, List<Categoria> categorias, Tipo tipo) {
+	public void modificarItem(String nombre, String descripcion, String tipo) {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
-		this.categorias = categorias;
 		this.tipo = tipo;
 	}
 	
 	public void consultarItem() {
 		System.out.println("Nombre del ítem: " + nombre + "/nDescripción: " + descripcion + 
-				"\nTipo: " + tipo.getNombre() + "\nCategorías: " + categorias.toString());
+				"\nTipo: " + tipo + "\nCategorías: " + categorias.toString());
 	}
 	
-	public void agregarCategoria(Categoria categoria) {
+	public void agregarCategoria(String categoria) {
 		categorias.add(categoria);
 	}
 	
-	public void borrarCategoria(Categoria categoria) throws Exception {
+	public void borrarCategoria(String categoria) throws Exception {
 		if (!categorias.contains(categoria)) {
 			throw new Exception("Esa categoría no existe.");
 		}
