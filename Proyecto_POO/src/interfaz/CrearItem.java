@@ -55,8 +55,7 @@ public class CrearItem extends JDialog {
 		model.setRowCount(0);
 		List<Tipo> listaTipos = control.obtenerListadosTipos();
 		for (Tipo tipo : listaTipos) {
-			String nombreTipo = tipo.getNombre();
-			Object[] fila = new Object[] {nombreTipo};
+			Object[] fila = new Object[] {tipo.getNombre()};
 			model.addRow(fila);
 		}
 	}
@@ -127,6 +126,8 @@ public class CrearItem extends JDialog {
 		tablaTipos.getColumnModel().getColumn(0).setPreferredWidth(664);
 		scrollPane.setViewportView(tablaTipos);
 		tablaTipos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		
+		cargarTipos();
 		
 		JButton btnConfirmar = new JButton("Confirmar");
 		btnConfirmar.addActionListener(new ActionListener() {

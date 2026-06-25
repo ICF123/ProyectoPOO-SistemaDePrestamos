@@ -240,13 +240,20 @@ public class Principal {
 	//Inician las funciones para la pestaña de Tipos:
 	private void cargarTipos() {
 		Controladora control = Controladora.getInstance();
-		DefaultTableModel model = (DefaultTableModel) tablaPersonas.getModel();
+		DefaultTableModel model = (DefaultTableModel) tablaTipos.getModel();
 		model.setRowCount(0);
 		List<Tipo> listaTipos = control.obtenerListadosTipos();
 		for (Tipo tipo : listaTipos) {
 			Object[] fila = new Object[] {tipo.getNombre()};
 			model.addRow(fila);
 		}
+	}
+	
+	private void crearTipo() {
+		Controladora control = Controladora.getInstance();
+		CrearTipo ventanaCrearTipo = new CrearTipo();
+		ventanaCrearTipo.setVisible(true);
+		cargarTipos();
 	}
 	//Terminan las funciones para la pestaña de Tipos.
 	
@@ -565,6 +572,45 @@ public class Principal {
 		tablaTipos.getColumnModel().getColumn(0).setPreferredWidth(667);
 		tablaTipos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPaneTipos.setViewportView(tablaTipos);
+		
+		JButton btnCrearTipo = new JButton("Crear");
+		btnCrearTipo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				crearTipo();
+			}
+		});
+		btnCrearTipo.setBounds(509, 14, 148, 22);
+		PanelTipos.add(btnCrearTipo);
+		
+		JButton btnModificarTipo = new JButton("Modificar");
+		btnModificarTipo.setBounds(509, 47, 148, 22);
+		PanelTipos.add(btnModificarTipo);
+		
+		JButton btnConsultarTipo = new JButton("Consultar");
+		btnConsultarTipo.setBounds(509, 80, 148, 22);
+		PanelTipos.add(btnConsultarTipo);
+		
+		JButton btnBorrarTipo = new JButton("Borrar");
+		btnBorrarTipo.setBounds(509, 113, 148, 22);
+		PanelTipos.add(btnBorrarTipo);
+		
+		JButton btnTipoGuardar = new JButton("Guardar datos");
+		btnTipoGuardar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				guardarDatos();
+			}
+		});
+		btnTipoGuardar.setBounds(509, 238, 148, 22);
+		PanelTipos.add(btnTipoGuardar);
+		
+		JButton btnTipoCargar = new JButton("Cargar datos");
+		btnTipoCargar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cargarDatos();
+			}
+		});
+		btnTipoCargar.setBounds(509, 274, 148, 22);
+		PanelTipos.add(btnTipoCargar);
 		
 		JPanel PanelPrestamos = new JPanel();
 		tabbedPanePrincipal.addTab("Préstamos", null, PanelPrestamos, null);

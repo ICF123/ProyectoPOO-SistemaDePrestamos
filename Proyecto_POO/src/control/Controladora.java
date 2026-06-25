@@ -33,6 +33,7 @@ public class Controladora implements Serializable {
 		personas = new ArrayList<Persona>();
 		try {
 			this.crearItem("Bola", "Rebota", "Juguete");
+			this.crearTipo("Juguete");
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());
@@ -58,6 +59,14 @@ public class Controladora implements Serializable {
 			throw new Exception("Ya existe un ítem con ese nombre.");
 		}
 		Item item = new Item(nombre, descripcion, codigoItem, tipo);
+		for (int i = 0; i < tipos.size(); i++) {
+			if (tipos.get(i).getNombre() == tipo) {
+				Tipo tipoTemporal = tipos.get(i);
+				tipoTemporal.agregarItem(item);
+				tipos.set(i, tipoTemporal);
+				break;
+			}
+		}
 		items.add(item);
 		codigoItem++;
 	}
